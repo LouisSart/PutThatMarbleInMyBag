@@ -3,7 +3,7 @@
 #include <deque>
 #include <iomanip>
 #include <iostream>
-#include <set>
+#include <unordered_set>
 #include <vector>
 
 template <typename T, typename... Ts>
@@ -81,10 +81,10 @@ template <unsigned N> struct SumMatrix : std::array<int, N * N> {
   }
 };
 
-template <unsigned N> std::set<long unsigned> count_matrices() {
+template <unsigned N> std::unordered_set<long unsigned> count_matrices() {
   auto root = SumMatrix<N>();
   std::deque<SumMatrix<N>> queue{root};
-  std::set<long unsigned> bag{root.hash()};
+  std::unordered_set<long unsigned> bag{root.hash()};
 
   while (queue.size() > 0) {
     auto M = queue.back();
@@ -96,7 +96,7 @@ template <unsigned N> std::set<long unsigned> count_matrices() {
       bag.insert(h);
     }
     queue.pop_back();
-    // print(((double)bag.size() / 22069251.0) * 100);
+    print(((double)bag.size() / 22069251.0) * 100);
   }
   return bag;
 }
@@ -106,6 +106,6 @@ int main() {
   print(count_matrices<2>().size());
   print(count_matrices<3>().size());
   print(count_matrices<4>().size());
-  // print(count_matrices<5>().size()); // 22043444 :(
+  print(count_matrices<5>().size()); // 22043444 :(
   return 0;
 }
