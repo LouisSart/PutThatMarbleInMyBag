@@ -60,11 +60,11 @@ template <unsigned N> struct SumMatrix : std::array<int, N * N> {
   }
 
   long unsigned hash() const {
-    unsigned ret = 0, p = 1;
+    long unsigned ret = 0, p = 1;
     for (unsigned r = 0; r < N - 1; ++r) {
       for (unsigned c = 0; c < N - 1; ++c) {
-        ret += p * (*this)[r * N + c];
-        p *= N + 1;
+        ret += (long unsigned)(p * (*this)[r * N + c]);
+        p *= (long unsigned)(N + 1);
       }
     }
     return ret;
@@ -96,7 +96,7 @@ template <unsigned N> std::unordered_set<long unsigned> count_matrices() {
       bag.insert(h);
     }
     queue.pop_back();
-    print(((double)bag.size() / 22069251.0) * 100);
+    // print(((double)bag.size() / 22069251.0) * 100);
   }
   return bag;
 }
@@ -106,6 +106,5 @@ int main() {
   print(count_matrices<2>().size());
   print(count_matrices<3>().size());
   print(count_matrices<4>().size());
-  print(count_matrices<5>().size()); // 22043444 :(
-  return 0;
+  print(count_matrices<5>().size()); // 22043445 :(
 }
