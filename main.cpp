@@ -32,8 +32,9 @@ template <unsigned N> struct SumMatrix : std::array<int, N * N> {
     (*this)[i * N + jj] += 1;
     (*this)[ii * N + j] += 1;
   }
-  bool is_possible_move(int i, int j, int ii, int jj) {
-    if (i == ii || j == jj)
+
+  bool is_possible_move(int i, int j, int ii, int jj) const {
+    if (j == jj)
       return false;
     if ((*this)[i * N + j] == 0 || (*this)[ii * N + jj] == 0)
       return false;
@@ -89,14 +90,13 @@ template <unsigned N> std::unordered_set<long unsigned> count_matrices() {
   while (queue.size() > 0) {
     auto M = queue.back();
     for (auto child : M.make_children()) {
-      unsigned h = child.hash();
+      long unsigned h = child.hash();
       if (!bag.contains(h)) {
         queue.push_front(child);
       }
       bag.insert(h);
     }
     queue.pop_back();
-    // print(((double)bag.size() / 22069251.0) * 100);
   }
   return bag;
 }
@@ -106,5 +106,5 @@ int main() {
   print(count_matrices<2>().size());
   print(count_matrices<3>().size());
   print(count_matrices<4>().size());
-  print(count_matrices<5>().size()); // 22043445 :(
+  // print(count_matrices<5>().size()); // takes nearly 20 minutes on my PC
 }
